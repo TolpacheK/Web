@@ -1,0 +1,657 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Jadoo Travel
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&amp;family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: 'Poppins', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+    }
+    /* Hover effect for images with overlay darkening and scale */
+    .hover-highlight {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 1.5rem; /* rounded-3xl */
+      transition: transform 0.3s ease;
+    }
+    .hover-highlight img {
+      transition: transform 0.3s ease;
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 1.5rem;
+    }
+    .hover-highlight::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0,0,0,0);
+      transition: background-color 0.3s ease;
+      border-radius: 1.5rem;
+      pointer-events: none;
+    }
+    .hover-highlight:hover::after {
+      background-color: rgba(0,0,0,0.25);
+    }
+    .hover-highlight:hover img {
+      transform: scale(1.05);
+    }
+    /* Buttons text hover effect */
+    button, a.button-link {
+      transition: color 0.3s ease, text-decoration-color 0.3s ease;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+      text-decoration-color: transparent;
+    }
+    /* For orange background buttons, fix hover text color and background */
+    button.bg-[#FF6B00]:hover {
+      background-color: #e05a00 !important;
+      color: #fff !important;
+      text-decoration: none !important;
+    }
+    /* For other buttons and links */
+    button:not(.bg-[#FF6B00]), a.button-link {
+      color: inherit;
+    }
+    button:not(.bg-[#FF6B00]):hover, a.button-link:hover {
+      color: #e05a00;
+      text-decoration-line: underline;
+      text-decoration-color: #e05a00;
+    }
+    /* Nav links hover effect */
+    nav a:hover {
+      color: #e05a00;
+      text-decoration-line: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+    }
+    /* Carousel styles */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .carousel-item {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 2rem;
+      background: white;
+      border-radius: 1.5rem;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+    .carousel-item.active {
+      opacity: 1;
+      transform: translateX(0);
+      position: relative;
+      z-index: 1;
+    }
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .carousel-controls button {
+      pointer-events: all;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #9CA3AF;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .carousel-controls button:hover {
+      color: #6B21A8;
+    }
+    /* Play Demo button interactive effect */
+    .play-demo {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      color: #FF6B00;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      text-decoration: none;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 2px;
+      text-decoration-color: transparent;
+    }
+    .play-demo:hover {
+      color: #e05a00;
+      text-decoration-line: underline;
+      text-decoration-color: #e05a00;
+    }
+    .play-demo .icon {
+      font-size: 1.25rem;
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    .play-demo:hover .icon {
+      transform: scale(1.2) rotate(10deg);
+      color: #e05a00;
+    }
+    .play-demo:focus-visible {
+      outline: 2px solid #e05a00;
+      outline-offset: 2px;
+    }
+  </style>
+ </head>
+ <body class="bg-white text-gray-900">
+  <header class="max-w-7xl mx-auto px-6 sm:px-10 py-6 flex items-center justify-between">
+   <div class="text-2xl font-bold font-playfair cursor-pointer select-none">
+    Jadoo
+   </div>
+   <nav class="hidden md:flex space-x-8 text-sm font-semibold text-gray-700">
+    <a class="hover:text-gray-900" href="#">
+     Destinations
+    </a>
+    <a class="hover:text-gray-900" href="#">
+     Hotels
+    </a>
+    <a class="hover:text-gray-900" href="#">
+     Flights
+    </a>
+    <a class="hover:text-gray-900" href="#">
+     Bookings
+    </a>
+    <a class="hover:text-gray-900" href="#">
+     Login
+    </a>
+    <button class="border border-gray-900 rounded-md px-4 py-1 text-sm font-semibold hover:bg-gray-900 hover:text-white transition">
+     Sign up
+    </button>
+    <button class="text-gray-700 font-semibold hover:text-gray-900">
+     EN
+    </button>
+   </nav>
+   <div class="md:hidden flex items-center space-x-4">
+    <button class="text-gray-700 font-semibold hover:text-gray-900">
+     EN
+    </button>
+    <button class="border border-gray-900 rounded-md px-4 py-1 text-sm font-semibold hover:bg-gray-900 hover:text-white transition">
+     Sign up
+    </button>
+   </div>
+  </header>
+  <main class="max-w-7xl mx-auto px-6 sm:px-10">
+   <!-- Hero Section -->
+   <section class="relative bg-[#FFF6E8] rounded-3xl flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-20 py-12 px-6 md:px-20 mt-6">
+    <div class="max-w-xl md:max-w-lg">
+     <p class="text-xs font-semibold text-[#FF6B00] tracking-widest mb-2">
+      BEST DESTINATIONS AROUND THE WORLD
+     </p>
+     <h1 class="text-4xl md:text-5xl font-playfair font-extrabold leading-tight mb-4">
+      Travel, enjoy and live a new and full life
+     </h1>
+     <p class="text-sm text-gray-700 mb-8">
+      Built Wicket longer admire do barton vanity itself do in it. Preferred to sportsmen it engrossed listening. Park gate sell they west hard for the.
+     </p>
+     <div class="flex items-center space-x-6">
+      <button class="bg-[#FF6B00] text-white text-sm font-semibold rounded-lg px-6 py-3 hover:bg-[#e05a00] transition">
+       Find out more
+      </button>
+      <a href="https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0&start_radio=1" target="_blank" rel="noopener noreferrer" class="play-demo" role="button" tabindex="0">
+       <i class="fas fa-play-circle icon" aria-hidden="true"></i>
+       <span>Play Demo</span>
+      </a>
+     </div>
+    </div>
+    <div class="relative w-full max-w-[320px] md:max-w-[400px] flex justify-center md:justify-end hover-highlight">
+     <img alt="Traveller 1 image" class="rounded-3xl drop-shadow-lg" height="480" loading="lazy" src="Traveller 1.png" width="400"/>
+     <div class="absolute top-0 right-0 w-24 h-24 rounded-full bg-[#FF6B00] opacity-10 -z-10">
+     </div>
+    </div>
+   </section>
+   <!-- Services Section -->
+   <section class="mt-20 max-w-5xl mx-auto px-4 sm:px-0">
+    <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2 text-center">
+     Category
+    </p>
+    <h2 class="text-2xl md:text-3xl font-playfair font-extrabold text-center mb-12">
+     We Offer Best Services
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+     <!-- Service 1 -->
+     <div class="bg-white rounded-2xl p-6 shadow-md flex flex-col items-center text-center hover-highlight">
+      <img alt="Icon representing calculated weather with sun and cloud" class="mb-4" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/dcc5d611-74ef-409a-2214-5e83a0d94285.jpg" width="64"/>
+      <h3 class="font-semibold text-lg mb-2">
+       Calculated Weather
+      </h3>
+      <p class="text-xs text-gray-500">
+       Built Wicket longer admire do barton vanity itself do in it.
+      </p>
+     </div>
+     <!-- Service 2 -->
+     <div class="bg-white rounded-2xl p-6 shadow-md flex flex-col items-center text-center hover-highlight">
+      <img alt="Icon representing secure flights with airplane" class="mb-4" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/4d5c3602-3d98-438d-dd59-30545d224ebb.jpg" width="64"/>
+      <h3 class="font-semibold text-lg mb-2">
+       Best Flights
+      </h3>
+      <p class="text-xs text-gray-500">
+       Engrossed listening. Park gate sell they west hard for the.
+      </p>
+     </div>
+     <!-- Service 3 -->
+     <div class="bg-white rounded-2xl p-6 shadow-md flex flex-col items-center text-center hover-highlight">
+      <img alt="Icon representing local events with calendar and location pin" class="mb-4" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/77e1b7c1-da8c-4e14-7ac9-68f94984a581.jpg" width="64"/>
+      <h3 class="font-semibold text-lg mb-2">
+       Local Events
+      </h3>
+      <p class="text-xs text-gray-500">
+       Barton vanity itself do in it. Preferd to men it engrossed listening.
+      </p>
+     </div>
+     <!-- Service 4 -->
+     <div class="bg-white rounded-2xl p-6 shadow-md flex flex-col items-center text-center hover-highlight">
+      <img alt="Icon representing customization with gear and sliders" class="mb-4" height="64" loading="lazy" src="https://storage.googleapis.com/a1aa/image/391c5f7d-eb56-4673-22cd-ba216b6130e9.jpg" width="64"/>
+      <h3 class="font-semibold text-lg mb-2">
+       Customization
+      </h3>
+      <p class="text-xs text-gray-500">
+       We deliver outsourced aviation services for military customers.
+      </p>
+     </div>
+    </div>
+    <div class="hidden md:block absolute right-0 top-[720px] w-40 h-40 border border-gray-300 rounded-full opacity-20 pointer-events-none">
+    </div>
+   </section>
+   <!-- Top Destinations Section -->
+   <section class="mt-20 max-w-5xl mx-auto px-4 sm:px-0">
+    <h2 class="text-2xl md:text-3xl font-playfair font-extrabold text-center mb-12">
+     Top Destinations
+    </h2>
+    <div class="flex flex-col sm:flex-row justify-center gap-8">
+     <!-- Destination 1 -->
+     <div class="bg-white rounded-3xl shadow-md max-w-xs w-full hover-highlight">
+      <img alt="Colosseum in Rome Italy with blue sky and some clouds" class="rounded-t-3xl w-full object-cover" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/25717c7a-69d3-44af-59ca-22c11d01312f.jpg" width="320"/>
+      <div class="p-6">
+       <h3 class="font-semibold text-lg mb-1">
+        Rome Italy
+       </h3>
+       <p class="text-xs text-gray-500 mb-2">
+        10 tours
+       </p>
+       <div class="flex items-center text-xs text-gray-400 space-x-2">
+        <i class="fas fa-map-marker-alt">
+        </i>
+        <span>
+         Italy
+        </span>
+       </div>
+      </div>
+     </div>
+     <!-- Destination 2 -->
+     <div class="bg-white rounded-3xl shadow-md max-w-xs w-full hover-highlight">
+      <img alt="Big Ben clock tower in London UK with blue sky and autumn leaves" class="rounded-t-3xl w-full object-cover" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/55d9940e-72ee-4111-ff50-176e2ff05b30.jpg" width="320"/>
+      <div class="p-6">
+       <h3 class="font-semibold text-lg mb-1">
+        London UK
+       </h3>
+       <p class="text-xs text-gray-500 mb-2">
+        12 tours
+       </p>
+       <div class="flex items-center text-xs text-gray-400 space-x-2">
+        <i class="fas fa-map-marker-alt">
+        </i>
+        <span>
+         UK
+        </span>
+       </div>
+      </div>
+     </div>
+     <!-- Destination 3 -->
+     <div class="bg-white rounded-3xl shadow-md max-w-xs w-full hover-highlight">
+      <img alt="San Francisco cityscape with Golden Gate Bridge and bay in California USA" class="rounded-t-3xl w-full object-cover" height="200" loading="lazy" src="https://storage.googleapis.com/a1aa/image/f632f358-19fa-467c-a877-6b81e4178ede.jpg" width="320"/>
+      <div class="p-6">
+       <h3 class="font-semibold text-lg mb-1">
+        California
+       </h3>
+       <p class="text-xs text-gray-500 mb-2">
+        15 tours
+       </p>
+       <div class="flex items-center text-xs text-gray-400 space-x-2">
+        <i class="fas fa-map-marker-alt">
+        </i>
+        <span>
+         USA
+        </span>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="hidden md:block absolute right-0 top-[1100px] w-40 h-40 border border-gray-300 rounded-full opacity-20 pointer-events-none">
+    </div>
+   </section>
+   <!-- Book Your Trip Section -->
+   <section class="mt-20 max-w-5xl mx-auto px-4 sm:px-0 flex flex-col md:flex-row items-center gap-12">
+    <div class="flex-1">
+     <h2 class="text-3xl font-playfair font-extrabold mb-6">
+      Book Your Next Trip In 3 Easy Steps
+     </h2>
+     <ol class="space-y-6 text-gray-700 text-sm">
+      <li class="flex items-start space-x-4">
+       <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#FF6B00] text-white font-semibold flex items-center justify-center">
+        1
+       </div>
+       <div>
+        <p class="font-semibold mb-1">
+         Choose Destination
+        </p>
+        <p>
+         Travel to your favorite city with our best travel agents.
+        </p>
+       </div>
+      </li>
+      <li class="flex items-start space-x-4">
+       <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#FF6B00] text-white font-semibold flex items-center justify-center">
+        2
+       </div>
+       <div>
+        <p class="font-semibold mb-1">
+         Make Payment
+        </p>
+        <p>
+         Pay securely through our payment gateway with multiple options.
+        </p>
+       </div>
+      </li>
+      <li class="flex items-start space-x-4">
+       <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[#FF6B00] text-white font-semibold flex items-center justify-center">
+        3
+       </div>
+       <div>
+        <p class="font-semibold mb-1">
+         Enjoy the Trip
+        </p>
+        <p>
+         Relax and enjoy your trip with our 24/7 customer support.
+        </p>
+       </div>
+      </li>
+     </ol>
+    </div>
+    <div class="flex-1 bg-white rounded-3xl shadow-md p-6 max-w-md w-full hover-highlight">
+     <img alt="Happy family on beach vacation with blue sky and ocean" class="rounded-3xl mb-6 w-full object-cover" height="240" loading="lazy" src="https://storage.googleapis.com/a1aa/image/3417e01d-6a88-4033-a8fb-546bcda0113c.jpg" width="360"/>
+     <div class="flex items-center space-x-4">
+      <img alt="User avatar of a smiling person" class="rounded-full w-12 h-12 object-cover" height="48" loading="lazy" src="https://storage.googleapis.com/a1aa/image/495b59a1-dd2d-4a4e-86c1-293db24fbc2f.jpg" width="48"/>
+      <div>
+       <p class="font-semibold text-gray-900">
+        Sophia L. Johnson
+       </p>
+       <p class="text-xs text-gray-500">
+        Trip to California
+       </p>
+      </div>
+     </div>
+    </div>
+   </section>
+   <!-- Testimonials Section -->
+   <section class="mt-20 max-w-5xl mx-auto px-4 sm:px-0 text-center">
+    <h2 class="text-2xl md:text-3xl font-playfair font-extrabold mb-12">
+     What People Say About Us.
+    </h2>
+    <div class="carousel" aria-label="Testimonials carousel">
+     <div class="carousel-inner" id="carousel-inner">
+      <div class="carousel-item active" role="group" aria-roledescription="slide" aria-label="1 of 3">
+       <p class="text-gray-700 mb-6">
+        “The best travel booking platform available with all the features you need. Great customer support and easy to use interface. Highly recommended!”
+       </p>
+       <p class="font-semibold text-gray-900">
+        Micheal Stevens
+       </p>
+       <p class="text-xs text-gray-400">
+        CEO, Travel Co.
+       </p>
+      </div>
+      <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="2 of 3" hidden>
+       <p class="text-gray-700 mb-6">
+        “Jadoo made my trip planning so easy and enjoyable. The customer service was outstanding and the deals were unbeatable.”
+       </p>
+       <p class="font-semibold text-gray-900">
+        Anna Williams
+       </p>
+       <p class="text-xs text-gray-400">
+        Travel Blogger
+       </p>
+      </div>
+      <div class="carousel-item" role="group" aria-roledescription="slide" aria-label="3 of 3" hidden>
+       <p class="text-gray-700 mb-6">
+        “I highly recommend Jadoo for anyone looking for a hassle-free travel experience. Their platform is intuitive and the support team is very helpful.”
+       </p>
+       <p class="font-semibold text-gray-900">
+        David Lee
+       </p>
+       <p class="text-xs text-gray-400">
+        Frequent Traveler
+       </p>
+      </div>
+     </div>
+     <div class="carousel-controls" role="group" aria-label="Carousel navigation">
+      <button aria-label="Previous testimonial" id="prevBtn" type="button">
+       <i class="fas fa-chevron-left"></i>
+      </button>
+      <button aria-label="Next testimonial" id="nextBtn" type="button">
+       <i class="fas fa-chevron-right"></i>
+      </button>
+     </div>
+    </div>
+   </section>
+   <!-- Partners Section -->
+   <section class="mt-20 max-w-5xl mx-auto px-4 sm:px-0 flex justify-center items-center space-x-12 opacity-70">
+    <img alt="Skyscanner company logo" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/50a99a97-6a3a-4c07-4b4e-e10142524a2d.jpg" width="100"/>
+    <img alt="Jetstar company logo" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/b85d4450-71fb-4616-8704-cffa57126de1.jpg" width="100"/>
+    <img alt="Expedia company logo" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/f0f554a7-0278-4dbf-971a-9e619e42dfdf.jpg" width="100"/>
+    <img alt="Qantas company logo" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/5cb17158-0669-4110-eb26-25735688fad0.jpg" width="100"/>
+    <img alt="Alaska company logo" height="40" loading="lazy" src="https://storage.googleapis.com/a1aa/image/09ad310d-7d45-4d9f-80a1-ee82a5d750ca.jpg" width="100"/>
+   </section>
+   <!-- Subscribe Section -->
+   <section class="mt-20 max-w-3xl mx-auto px-6 py-12 rounded-3xl bg-[#F5F3FF] text-center relative">
+    <p class="text-gray-700 mb-6 text-lg font-semibold">
+     Subscribe to get information, latest news and other interesting offers about Jadoo
+    </p>
+    <form class="flex flex-col sm:flex-row justify-center items-center gap-4 max-w-xl mx-auto">
+     <input aria-label="Email address input" class="w-full sm:flex-1 rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]" placeholder="Your email" required="" type="email"/>
+     <button class="bg-[#FB6E3B] text-white font-semibold rounded-lg px-8 py-3 hover:bg-[#e05a00] transition w-full sm:w-auto">
+      Subscribe
+     </button>
+    </form>
+    <div class="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-24 h-24 rounded-full bg-[#7C3AED] opacity-10 pointer-events-none">
+    </div>
+   </section>
+  </main>
+  <!-- Footer -->
+  <footer class="mt-20 bg-white border-t border-gray-200 py-12">
+   <div class="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+    <div class="text-gray-900 font-semibold text-lg select-none cursor-default">
+     Jadoo.
+    </div>
+    <div class="flex flex-col sm:flex-row space-y-6 sm:space-y-0 sm:space-x-20 text-gray-600 text-sm">
+     <div>
+      <h4 class="font-semibold mb-3">
+       Company
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         About
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Careers
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Mobile
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-3">
+       Contact
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Help/FAQ
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Press
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Affiliates
+        </a>
+       </li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="font-semibold mb-3">
+       More
+      </h4>
+      <ul class="space-y-2">
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Airlines
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Airfees
+        </a>
+       </li>
+       <li>
+        <a class="hover:text-gray-900" href="#">
+         Tips
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+    <div class="flex items-center space-x-6">
+     <button aria-label="Discover our app" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+      <i class="fas fa-mobile-alt text-xl">
+      </i>
+      <span class="text-sm font-semibold">
+       Discover our app
+      </span>
+     </button>
+     <div class="flex space-x-4">
+      <a aria-label="Download on Apple Store" class="text-gray-600 hover:text-gray-900" href="#">
+       <i class="fab fa-apple fa-2x">
+       </i>
+      </a>
+      <a aria-label="Download on Google Play" class="text-gray-600 hover:text-gray-900" href="#">
+       <i class="fab fa-google-play fa-2x">
+       </i>
+      </a>
+     </div>
+    </div>
+   </div>
+   <p class="text-center text-xs text-gray-400 mt-10 select-none">
+    All rights reserved © Jadoo.co
+   </p>
+  </footer>
+  <script>
+   (() => {
+      const carouselInner = document.getElementById('carousel-inner');
+      const items = carouselInner.querySelectorAll('.carousel-item');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let currentIndex = 0;
+      let isAnimating = false;
+
+      function showSlide(index) {
+        if (isAnimating) return;
+        if (index < 0) index = items.length - 1;
+        if (index >= items.length) index = 0;
+        if (index === currentIndex) return;
+
+        isAnimating = true;
+        const currentItem = items[currentIndex];
+        const nextItem = items[index];
+
+        // Prepare next item
+        nextItem.style.transition = 'none';
+        nextItem.style.transform = (index > currentIndex || (currentIndex === items.length - 1 && index === 0)) ? 'translateX(100%)' : 'translateX(-100%)';
+        nextItem.style.opacity = '1';
+        nextItem.hidden = false;
+
+        requestAnimationFrame(() => {
+          // Animate current out
+          currentItem.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+          currentItem.style.transform = (index > currentIndex || (currentIndex === items.length - 1 && index === 0)) ? 'translateX(-100%)' : 'translateX(100%)';
+          currentItem.style.opacity = '0';
+
+          // Animate next in
+          nextItem.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+          nextItem.style.transform = 'translateX(0)';
+
+          // After animation
+          setTimeout(() => {
+            currentItem.hidden = true;
+            currentItem.style.opacity = '';
+            currentItem.style.transform = '';
+            nextItem.classList.add('active');
+            currentItem.classList.remove('active');
+            isAnimating = false;
+            currentIndex = index;
+          }, 600);
+        });
+      }
+
+      prevBtn.addEventListener('click', () => {
+        showSlide(currentIndex - 1);
+      });
+
+      nextBtn.addEventListener('click', () => {
+        showSlide(currentIndex + 1);
+      });
+
+      // Auto slide every 6 seconds
+      setInterval(() => {
+        showSlide(currentIndex + 1);
+      }, 6000);
+
+      // Initialize
+      items.forEach((item, i) => {
+        if(i !== 0) item.hidden = true;
+      });
+      items[0].classList.add('active');
+    })();
+  </script>
+ </body>
+</html>
